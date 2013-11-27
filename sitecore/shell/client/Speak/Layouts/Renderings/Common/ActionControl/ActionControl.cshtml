@@ -1,0 +1,43 @@
+﻿@using Sitecore.Mvc.Presentation
+@using Sitecore.Web.UI.Controls.Common.ActionControls
+@model RenderingModel
+@{
+  var actionControl = new ActionControl(new DatasourceBasedParametersResolver(Model.Rendering));
+
+  actionControl.AppendClass("sc-actionpanel");
+
+  var htmlAttributes = actionControl.HtmlAttributes;
+  var text = actionControl.Text;
+  var menu = actionControl.RenderMenu();
+}                    
+<!-- CLA #17777-->
+<div @htmlAttributes style="display:none;">
+  <div style="display:none" class="sc-actionpanel-popup" data-bind="visible:isOpen, click: toggleIsOpen"></div>     
+  <ul role="menu" class="nav">
+    <li>
+      <div class="btn-group" data-bind="foreach:favorites">
+        <!-- ko ifnot: isIcon -->
+        <span><a class="btn" href="javascript:;" data-toggle="tooltip" data-bind="text: text, click: $parent.invokeFavorite,attr:{title:tooltip}"></a></span>        
+        <!-- /ko -->
+
+        <!-- ko if: isIcon -->
+        <span><a class="btn" href="javascript:;" data-bind="attr:{title:tooltip}">
+          <div class="sc-icon" data-bind="click: $parent.invokeFavorite, style: { backgroundImage: iconSrc, backgroundPosition: iconBackgroundPosition }" >
+					</div>
+        </a></span> 
+        <!-- /ko -->
+
+      </div>
+    </li>
+    <li role="menuitem">
+      <div class="dropdown" data-bind="click:invokeAction">
+        <a class="btn" data-bind="click: toggleIsOpen, clickBubble: false">
+          @text
+          <span class="caret"></span>
+        </a> 
+
+        @Html.Raw(menu)
+      </div>
+    </li>
+  </ul>
+</div>

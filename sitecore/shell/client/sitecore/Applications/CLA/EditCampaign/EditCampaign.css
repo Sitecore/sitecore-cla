@@ -1,0 +1,25 @@
+﻿[data-sc-id="PageVariantAccordion"] .sc-accordion-header-title {
+  color: #c03417;
+}
+
+[data-sc-id="PageVariantAccordion"] .sc-accordion-header-actionbar {
+  float: right;
+}
+
+[data-sc-id="VersionAccordion"] .sc-accordion-header-actionbar {
+  float: right;
+}
+
+code[type="text/sitecore"] {
+  display: none;
+}
+
+body.sc .sc-tabcontrol-tab.tab-pane {
+  overflow: visible;
+}
+
+.sc-tabcontrol .tab-content
+{
+	overflow: visible;
+}
+

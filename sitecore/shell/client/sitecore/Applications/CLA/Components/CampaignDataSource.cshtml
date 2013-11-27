@@ -1,0 +1,15 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Sitecore.Web.UI.Controls.Common.UserControls
+@model RenderingModel
+@{
+  var userControl = this.Html.Sitecore().Controls().GetUserControl(this.Model.Rendering);
+  var cssClass = "sc-campaignDataSource";
+  userControl.Requires.Script("cla", "CampaignDataSource.js");
+  var htmlAttributes = userControl.HtmlAttributes;
+
+  userControl.AppendClass(cssClass);
+}
+<script type="text/x-sitecore-searchdatasource" @htmlAttributes>
+ 
+</script>

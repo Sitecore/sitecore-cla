@@ -1,0 +1,14 @@
+﻿<style type="text/css">
+
+ /*#19934, CLA, yvy*/ 
+.sc .sc-tabcontrol.progressive .nav-tabs li > a:focus {
+  outline-style: none;  
+}
+
+</style>
+
+
+@using Sitecore.Mvc
+@using Sitecore.Web.UI.Controls.Containers.TabControls
+@model Sitecore.Mvc.Presentation.RenderingModel         
+@Html.Sitecore().Controls().TabControl(Model.Rendering)

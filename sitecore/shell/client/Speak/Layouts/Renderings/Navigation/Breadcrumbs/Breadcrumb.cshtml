@@ -1,0 +1,7 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Web.UI.Controls.Navigation.BreadCrumbs
+@model Sitecore.Mvc.Presentation.RenderingModel                  
+
+@*CLA,#17776,yvy - using BreadCrumb-custom for displaying names of page parameters *@
+@*@Html.Sitecore().Controls().BreadCrumb(Model.Rendering)*@
+@Sitecore.Cla.Presentation.BreadCrumbCustom.GetHtmlString(Model.Rendering)

@@ -1,0 +1,17 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Sitecore.Web.UI.Controls.Common.UserControls
+@model RenderingModel
+@{
+  var userControl = this.Html.Sitecore().Controls().GetUserControl(this.Model.Rendering);
+  var cssClass = "sc-campaignDevicesChart";
+  userControl.Requires.Script("cla", "CampaignDevicesChart.js");    
+  var itemId = userControl.GetString("ItemId", "ItemId");
+  userControl.Attributes["data-sc-itemId"] = itemId;
+  
+  userControl.AppendClass(cssClass);
+  var htmlAttributes = userControl.HtmlAttributes;
+}
+<div  id="sc-chartContainer" @htmlAttributes> 
+  FusionCharts XT will load here!
+</div>

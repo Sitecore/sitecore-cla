@@ -1,0 +1,390 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Sitecore.Web.UI.Controls.Common.UserControls
+@model RenderingModel
+@{
+  var userControl = this.Html.Sitecore().Controls().GetUserControl(this.Model.Rendering);
+  var cssClass = "sc-social-repeater";
+  userControl.Requires.Script("cla", "SocialMessagesRepeater.js");
+
+  userControl.AppendClass(cssClass);
+  var htmlAttributes = userControl.HtmlAttributes;
+}
+
+<!-- buttons panel-->
+<div class="sc-border  sc-show-padding">
+	<div class="row-fluid ">
+		<button id="sc-social-repeater-NewFacebook" class="btn sc-button">
+			<span class="sc-button-text">Facebook</span>
+		</button>
+		<button id="sc-social-repeater-NewTwitter" class="btn sc-button">
+			<span class="sc-button-text">Twitter</span>
+		</button>
+	</div>
+</div>
+
+<!-- container -->
+<div id="sc-social-repeaterContainer" @htmlAttributes></div>
+
+<!-- dialogs -->
+
+<!-- facebook dialog -->
+<div
+  id="sc-social-repeater-fb-dialog"
+  class="modal-scrollable"
+  style="display:none; z-index: 1050;">
+  <div
+    class="sc-dialogWindow modal"
+    style="display:block; width:640px; margin-left:-320px; margin-top:-241px;"
+    aria-hidden="false">
+    <div class="sc-dialogWindow-header ">
+      <div class="sc-dialogWindow-header-row1">
+        <a
+          class="sc-dialogWindow-close"
+          onclick="javascript:$('#sc-social-repeater-fb-dialog').hide();"></a>
+        <div class="sc-dialogWindow-actions"></div>
+        <span class="sc-dialogWindow-header-title">Facebook Message</span>
+      </div>
+      <div class="sc-dialogWindow-header-row2">
+        <div class="sc-dialogWindow-buttons">
+          <button class="btn sc-button btn-primary" id="sc-social-repeater-fb-btn-create">
+            <span class="sc-button-text">Create</span>
+          </button>
+        </div>
+        <div class="sc-dialogWindow-navigation">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="modal-body sc-dialogWindow-body" style="overflow: auto; height: 403px;padding:15px;">
+      <div>
+        <label>Message</label>
+        <input id="facebook-dialog-message" type="text" placeholder="Enter a message" class="sc-textbox" />
+      </div>
+      <br />
+      <div>
+        <label>Link Title</label>
+        <input id="facebook-dialog-link-title" type="text" placeholder="Enter link title" class="sc-textbox" />
+      </div>
+      <br />
+      <div>
+        <label>Link Description</label>
+        <input id="facebook-dialog-link-description" type="text" placeholder="Enter link description" class="sc-textbox" />
+      </div>
+      <br />
+      <div class="sc-checkbox">
+        <label>Publish with item</label>
+        <input id="facebook-dialog-publish" type="checkbox">
+      </div>
+	  <div class="account-selector">
+		<label>Social accounts</label>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<!-- facebook edit dialog -->
+<div
+  id="sc-social-repeater-fb-edit-dialog"
+  class="modal-scrollable"
+  style="display:none; z-index: 1050;">
+  <input type="hidden" id="facebook-edit-dialog-message-id" />
+  <div
+    class="sc-dialogWindow modal"
+    style="display:block; width:640px; margin-left:-320px; margin-top:-241px;"
+    aria-hidden="false">
+    <div class="sc-dialogWindow-header ">
+      <div class="sc-dialogWindow-header-row1">
+        <a
+          class="sc-dialogWindow-close"
+          onclick="javascript:$('#sc-social-repeater-fb-edit-dialog').hide();"></a>
+        <div class="sc-dialogWindow-actions"></div>
+        <span class="sc-dialogWindow-header-title">Facebook Message</span>
+      </div>
+      <div class="sc-dialogWindow-header-row2">
+        <div class="sc-dialogWindow-buttons">
+          <button class="btn sc-button" id="sc-social-repeater-fb-btn-edit">
+            <span class="sc-button-text">Update</span>
+          </button>
+        </div>
+        <div class="sc-dialogWindow-navigation">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="modal-body sc-dialogWindow-body" style="overflow: auto; height: 403px;padding:15px;">
+      <div>
+        <label>Message</label>
+        <input id="facebook-edit-dialog-message" type="text" placeholder="Enter a message" class="sc-textbox" />
+      </div>
+      <br />
+      <div>
+        <label>Link Title</label>
+        <input id="facebook-edit-dialog-link-title" type="text" placeholder="Enter link title" class="sc-textbox" />
+      </div>
+      <br />
+      <div>
+        <label>Link Description</label>
+        <input id="facebook-edit-dialog-link-description" type="text" placeholder="Enter link description" class="sc-textbox" />
+      </div>
+      <br />
+      <div class="sc-checkbox">
+        <label>Publish with item</label>
+        <input id="facebook-edit-dialog-publish" type="checkbox">
+      </div>
+	  <div class="account-selector">
+		<label>Social accounts</label>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<!-- twitter dialog -->
+<div
+  id="sc-social-repeater-twitter-dialog"
+  class="modal-scrollable"
+  style="display:none; z-index: 1050;">
+  <div
+    class="sc-dialogWindow modal"
+    style="display:block; width:640px; margin-left:-320px; margin-top:-241px;"
+    aria-hidden="false">
+    <div class="sc-dialogWindow-header ">
+      <div class="sc-dialogWindow-header-row1">
+        <a
+          class="sc-dialogWindow-close"
+          onclick="javascript:$('#sc-social-repeater-twitter-dialog').hide();"></a>
+        <div class="sc-dialogWindow-actions"></div>
+        <span class="sc-dialogWindow-header-title">Twitter Message</span>
+      </div>
+      <div class="sc-dialogWindow-header-row2">
+        <div class="sc-dialogWindow-buttons">
+          <button id="sc-social-repeater-twitter-btn-create" class="btn sc-button btn-primary">
+            <span class="sc-button-text">Create</span>
+          </button>
+        </div>
+        <div class="sc-dialogWindow-navigation">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="modal-body sc-dialogWindow-body" style="overflow: auto; height: 403px;padding:15px;">
+      <div>
+        <label>Message</label>
+        <input id="twitter-dialog-message" type="text" placeholder="Enter a message" class="sc-textbox" />
+      </div>
+      <br />
+      <div class="sc-checkbox">
+        <label>Publish with item</label>
+        <input id="twitter-dialog-publish" type="checkbox">
+      </div>
+	  <div class="account-selector">
+		<label>Social accounts</label>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<!-- twitter edit dialog -->
+<div
+  id="sc-social-repeater-twitter-edit-dialog"
+  class="modal-scrollable"
+  style="display:none; z-index: 1050;">
+  <input type="hidden" id="twitter-edit-dialog-message-id" />
+  <div
+    class="sc-dialogWindow modal"
+    style="display:block; width:640px; margin-left:-320px; margin-top:-241px;"
+    aria-hidden="false">
+    <div class="sc-dialogWindow-header ">
+      <div class="sc-dialogWindow-header-row1">
+        <a
+          class="sc-dialogWindow-close"
+          onclick="javascript:$('#sc-social-repeater-twitter-edit-dialog').hide();"></a>
+        <div class="sc-dialogWindow-actions"></div>
+        <span class="sc-dialogWindow-header-title">Twitter Message</span>
+      </div>
+      <div class="sc-dialogWindow-header-row2">
+        <div class="sc-dialogWindow-buttons">
+          <button class="btn sc-button" id="sc-social-repeater-twitter-btn-edit">
+            <span class="sc-button-text">Update</span>
+          </button>
+        </div>
+        <div class="sc-dialogWindow-navigation">
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="modal-body sc-dialogWindow-body" style="overflow: auto; height: 403px;padding:15px;">
+      <div>
+        <label>Message</label>
+        <input id="twitter-edit-dialog-message" type="text" placeholder="Enter a message" class="sc-textbox" />
+      </div>
+      <br />
+      <div class="sc-checkbox">
+        <label>Publish with item</label>
+        <input id="twitter-edit-dialog-publish" type="checkbox">
+      </div>
+	  <div class="account-selector">
+		<label>Social accounts</label>
+	  </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Facebook message template -->
+<script id="sc-social-repeater-facebook-message-template" type="text/template">
+  <div id="subapp_220">
+    <div
+      class="sc-border" style="padding-bottom:15px;">
+      <div
+        class="sc-accordion">
+        <div class="sc-accordion-header">
+          <table>
+            <tbody>
+              <tr>
+                <td class="sc-accordion-header-title">Facebook Message</td>
+                <td class="sc-accordion-header-actionbar" style="text-align:right; padding-right:10px;">
+                  <button
+                    class="btn sc-button btn-primary delete-fb-message"
+                    data-id="<%= MessageItemID %>">
+                    <span class="sc-button-text">Delete</span>
+                  </button>
+                  <button
+                    class="btn sc-button edit-fb-message"
+                    data-id="<%= MessageItemID %>"
+                    data-message="<%= MessageText %>"
+                    data-link-title="<%= LinkTitle %>"
+                    data-link-description="<%= LinkDescription %>"
+                    data-publish="<%= PublishWithItem %>">
+                    <span
+                      class="sc-button-text">Edit</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="sc-accordion-header-promotedfields" colspan="3"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sc-accordion-body">
+          <div
+            class="sc-accordion-bodywrapper"
+            style="height: 100%;">
+            <div
+              class="sc-border sc-show-padding">
+              <div class="row-fluid ">
+                <div class="span1">
+                  <img
+                    src="/sitecore/shell/client/Sitecore/Applications/CLA/Images/facebook2.png"
+                    class="sc-image">
+                </div>
+                <div class="span7" style="border:solid silver 1px; padding: 5px;">
+                  <div class="sc-textarea">
+                    <%= MessageText %>
+                  </div>
+                  <a href="<%= Url %>" target="_blank"><%= LinkTitle %></a>
+                  <div><%= LinkDescription %></div>
+                </div>
+                <div class="span4" style="padding:10px;">
+                  <%= PublishWithItemText %>
+				  <ul class="account-list">
+					<%= AccountsList %>
+				  </ul>
+                  <button
+                    class="btn sc-button sc-social-repeater-fb-btn-publish"
+                    data-id="<%= MessageItemID %>">
+                    <span class="sc-button-text">Post to all accounts</span>
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<!-- Twitter message template -->
+<script id="sc-social-repeater-twitter-message-template" type="text/template">
+  <div id="subapp_220" data-sc-app="" style="">
+    <div class="sc-border" style="padding-bottom:15px;">
+      <div class="sc-accordion">
+        <div class="sc-accordion-header">
+          <table>
+            <tbody>
+              <tr>
+                <td class="sc-accordion-header-title">Twitter Message</td>
+                <td class="sc-accordion-header-actionbar" style="text-align:right; padding-right:10px;">
+                  <button
+                    class="btn sc-button btn-primary delete-twitter-message"
+                    data-id="<%= MessageItemID %>">
+                    <span class="sc-button-text">Delete</span>
+                  </button>
+                  <button
+                    class="btn sc-button edit-twitter-message"
+                    data-id="<%= MessageItemID %>"
+                    data-message="<%= MessageText %>"
+                    data-publish="<%= PublishWithItem %>">
+                    <span class="sc-button-text">Edit</span>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="sc-accordion-header-promotedfields" colspan="3"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sc-accordion-body" data-bind="visible: isOpen">
+          <div class="sc-accordion-bodywrapper" style="height: 100%;">
+            <div class="sc-border sc-show-padding">
+              <div class="row-fluid ">
+                <div class="span1">
+                  <img
+                    src="/sitecore/shell/client/Sitecore/Applications/CLA/Images/twitter2.png"
+                    class="sc-image">
+                </div>
+                <div class="span7" style="border:solid silver 1px; padding: 5px;">
+                  <div class="sc-textarea">
+                  <%= MessageText %>
+                  <a href="<%= Url %>" target="_blank"><%= Url %></a>
+                  </div>
+                </div>
+                <div class="span4" style="padding:10px;">
+                  <%= PublishWithItemText %>
+				  <ul class="account-list">
+					<%= AccountsList %>
+				  </ul>
+                  <button
+                    class="btn sc-button sc-social-repeater-twitter-btn-publish"
+                    data-id="<%= MessageItemID %>">
+                    <span class="sc-button-text">Post to all accounts</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="sc-accordion-footer"
+            style="display: none;">
+            <div
+              class="sc-accordion-footer-less"
+              style="display: none;">
+              <a href="#">Less</a>
+            </div>
+            <div
+              class="sc-accordion-footer-more">
+              <a href="#">More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
